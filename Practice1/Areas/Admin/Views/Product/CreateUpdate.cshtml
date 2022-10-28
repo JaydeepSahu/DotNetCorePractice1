@@ -1,0 +1,76 @@
+﻿@model MyApp.Models.ViewModel.ProductVM;
+@{
+    ViewData["Title"] = "Create/Edit";
+}
+<form method="post" enctype="multipart/form-data" asp-action="CreateUpdate">
+    <div class="border mt-4 p-3">
+        <div class="row pb-3">
+            <h2 class="text-primary">@((Model.Product == null || Model.Product.Id == 0) ? "Create" : "Update") Category</h2>
+            <hr />
+        </div>
+        <input type="hidden" asp-for="Product.Id" />
+        <input type="hidden" asp-for="Product.ImageUrl" />
+        <div class="row mb-3">
+            <label asp-for="Product.Name"></label>
+            <input asp-for="Product.Name" class="form-control" />
+            <span asp-validation-for="Product.Name" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Product.Description"></label>
+            <textarea asp-for="Product.Description" class="form-control" ></textarea>
+            <span asp-validation-for="Product.Description" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Product.Price"></label>
+            <input asp-for="Product.Price" class="form-control" />
+            <span asp-validation-for="Product.Price" class="text-danger"></span>
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Product.ImageUrl"></label>
+            <input type="file" name="file" id="file" class="form-select" />
+        </div>
+        <div class="row mb-3">
+            <label asp-for="Product.CategoryId"></label>
+            <Select asp-for="Product.CategoryId" asp-items="Model.Categories as IEnumerable<SelectListItem>" class="form-control" >
+                <option selected disabled>--Select Category</option>
+            </Select>
+            <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+        </div>
+        <button class="btn btn-primary" onclick="return validateEmpty()" type="submit">@((Model.Product == null || Model.Product.Id == 0) ? "Create" : "Update")</button>
+        <div asp-validation-summary="All"></div>
+    </div>
+    <a asp-action="Index" asp-controller="Product">Back To List</a>
+</form>
+
+@section scripts{
+    @{
+    <partial name="_ValidationScriptsPartial" />
+    }
+    <script src="https://cdn.tiny.cloud/1/c8c8y5jczzai6hzh6dwev56zwuadpfxds5u82nn7wa8xp2wo/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
+    <script>
+       function validateEmpty(){
+           if($("#file").val()==""){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please Choose Image!'
+                })
+                return false;
+           }
+           return true;
+        }
+
+
+        tinymce.init({
+            selector: 'textarea',
+            plugins: 'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount checklist mediaembed casechange export formatpainter pageembed linkchecker a11ychecker tinymcespellchecker permanentpen powerpaste advtable advcode editimage tinycomments tableofcontents footnotes mergetags autocorrect',
+            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | link image media table mergetags | addcomment showcomments | spellcheckdialog a11ycheck | align lineheight | checklist numlist bullist indent outdent | emoticons charmap | removeformat',
+            tinycomments_mode: 'embedded',
+            tinycomments_author: 'Author name',
+            mergetags_list: [
+                { value: 'First.Name', title: 'First Name' },
+                { value: 'Email', title: 'Email' },
+            ]
+        });
+    </script>
+    }

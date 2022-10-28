@@ -1,0 +1,46 @@
+﻿@model MyApp.Models.ViewModel.ProductVM
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+<h1>List Of Categories</h1>
+<br />
+<a type="button" class="btn btn-primary" asp-area="Admin" asp-controller="Product" asp-action="CreateUpdate">Create Category</a>
+<table class="table table-bordered table-striped" id="myTable" style="width:100%">
+    <thead>
+        <tr>
+            <th>Sr. No.</th>
+            <th> Name</th>
+            <th>Discription</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @*@{
+            int i = 1;
+            foreach (var item in Model.products)
+            {
+                <tr>
+                    <td>@i</td>
+                    <td>@item.Name</td>
+                    <td>@item.Description</td>
+                    <td>@item.Price</td>
+                    <td>@item.Category</td>
+                    <td role="group">
+                        <a asp-action="CreateUpdate" asp-controller="Product" asp-route-id="@item.Id">Edit</a>
+                        <a asp-area="Admin" asp-action="Delete" asp-controller="Product" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+                i++;
+            }
+        }*@
+    </tbody>
+</table>
+@section scripts{
+    <script src="~/js/Product.js"></script>
+
+
+}
